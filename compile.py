@@ -14,6 +14,8 @@ libdeps = env.subst("$PROJECT_LIBDEPS_DIR/$PIOENV")
 cpu = "avr"
 if "espressif" in env.subst("$PIOPLATFORM"):
   cpu = "esp"
+elif "ststm32" in env.subst("$PIOPLATFORM"):
+  cpu = "arm"
 
 flags = (
   f"--path:{libdeps} "
