@@ -20,14 +20,7 @@ elif "ststm32" in env.subst("$PIOPLATFORM"):
 flags = (
   f"--path:{libdeps} "
   f"--nimcache:{src/'nimcache'} "
-  "--compileOnly "
   f"--cpu:{cpu} "
-  "--deadCodeElim "
-  "--os:standalone "
-  "--noMain "
-  "--gc:none "
-  "--stacktrace:off "
-  "--profiler:off"
 )
 
 result = system(f"nim cpp {flags} {src/'main'}")
