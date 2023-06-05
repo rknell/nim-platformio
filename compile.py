@@ -9,8 +9,8 @@ src = Path(env.subst("$PROJECT_SRC_DIR"))
 if not path.exists(src/'panicoverride.nim'):
   copyfile(Path().parent/'panicoverride.nim', src/'panicoverride.nim')
 
-if not path.exists('nim.cfg'):
-  copyfile(Path().parent/'nim.cfg', 'nim.cfg')
+if not path.exists(src.parent/'nim.cfg'):
+  copyfile(src.parent/'nim.cfg', 'nim.cfg')
 
 libdeps = env.subst("$PROJECT_LIBDEPS_DIR/$PIOENV")
 
