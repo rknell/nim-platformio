@@ -12,7 +12,7 @@ following dependency:
 
 ```ini
 lib_deps =
-  https://github.com/markspanbroek/nim-platformio
+  https://github.com/dwhall/nim-platformio
 ```
 
 Also, make sure that [Nim][1] is installed, and that the `nim` executable is
