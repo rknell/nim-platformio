@@ -19,7 +19,6 @@ elif "ststm32" in env.subst("$PIOPLATFORM"):
 
 flags = (
   f"--path:{libdeps} "
-  f"--nimcache:{src/'nimcache'} "
   f"--cpu:{cpu} "
 )
 
