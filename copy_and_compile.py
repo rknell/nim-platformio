@@ -27,32 +27,35 @@ def copy_files():
 
 def compile():
     """
-    To be responsive to changes to PlatformIO project
-    config files, some arguments are generated dynamically
-    and passed to the nim compiler on the command line.
+    Generates nim compiler arguments dynamically
+    based on PlatformIO settings and compiles main.nim
     """
-    # A table to convert PlatformIO 'platform' setting
-    # to the CPU type to give to the Nim compiler.
-    default_cpu_family = "avr"
-    cpu_info = (
-        ("espressif", "esp"),
-        ("ststm32", "arm"),
-        )
-
-    prj_src_dir = Path(env.subst("$PROJECT_SRC_DIR"))
-
-    # Build project-specific args to the nim compiler
     libdeps = env.subst("$PROJECT_LIBDEPS_DIR/$PIOENV")
-    for plat, cpu_family in cpu_info:
-        if plat in env.subst("$PIOPLATFORM"):
-            cpu = cpu_family
-            break
-    else:
-        cpu = default_cpu_family
+    cpu = _get_cpu()
     nim_args = f"--path:{libdeps} --cpu:{cpu} "
-
-    # Compile main.nim
+    prj_src_dir = Path(env.subst("$PROJECT_SRC_DIR"))
     system(f"nim cpp {nim_args} {prj_src_dir/'main'}")
+
+
+def _get_cpu() -> str:
+    """
+    Returns the CPU type to give to the Nim compiler
+    based on the PlatformIO platform setting.
+    Reference:
+    https://docs.platformio.org/en/latest/platforms/index.html
+    """
+    DEFAULT_CPU = "arm"
+    platform_cpu = {
+        "atmelavr": "avr",
+        "atmelmegaavr": "avr",
+        "espressif32": "esp",
+        "espressif8266": "esp",
+        "riscv_gap": "riscv32",
+        "sifive": "riscv32",
+        "timsp430": "msp430",
+    }
+    pio_plat = env.subst("$PIOPLATFORM")
+    return platform_cpu.get(pio_plat, DEFAULT_CPU)
 
 
 # try:4

@@ -6,6 +6,6 @@
       "nimbase": "https://github.com/markspanbroek/nimbase.git"
   },
   "build": {
-    "extraScript": "copy_and_compile.py"
+      "extraScript": "copy_and_compile.py"
   }
 }
