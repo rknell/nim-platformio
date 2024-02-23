@@ -1,10 +1,13 @@
-proc printf(frmt: cstring) {.varargs, importc, header: "<stdio.h>", cdecl.}
+proc puts(s: cstring) {.importc, header: "<stdio.h>", cdecl.}
+proc putchar(c: int) {.importc, header: "<stdio.h>", cdecl.}
 proc exit(code: int) {.importc, header: "<stdlib.h>", cdecl.}
 
 {.push stack_trace: off, profiler:off.}
 
 proc rawoutput(s: string) =
-  printf("%s\n", s)
+  puts(s.cstring)
+  const newline = ord('\n')
+  putchar(newline)
 
 proc panic(s: string) =
   rawoutput(s)
