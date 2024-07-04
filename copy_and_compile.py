@@ -1,4 +1,4 @@
-from os import path, system
+from os import makedirs, path, system
 from pathlib import Path
 from shutil import copyfile
 
@@ -10,19 +10,22 @@ def copy_files():
     """Copies a minimum set of files needed to compile
     if they do not already exist in the project.
     """
+    prj_dir = Path(env.subst("$PROJECT_DIR"))
     prj_src_dir = Path(env.subst("$PROJECT_SRC_DIR"))
 
     # Default files and their destination
     default_file_info = (
+        ("nim.cfg", prj_dir),
         ("panicoverride.nim", prj_src_dir),
         ("main.nim", prj_src_dir),
-        ("nim.cfg", prj_src_dir.parent),
-        )
+    )
 
     # Copy a default file if a file is missing
     for fn, dest in default_file_info:
-        if not path.exists(dest/fn):
-            copyfile(Path().parent/fn, dest/fn)
+        if not path.exists(dest):
+            makedirs(dest)
+        if not path.exists(dest / fn):
+            copyfile(Path().parent / fn, dest / fn)
 
 
 def compile():
