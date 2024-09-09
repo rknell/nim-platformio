@@ -37,7 +37,7 @@ def compile():
     cpu = _get_cpu()
     nim_args = f"--path:{libdeps} --cpu:{cpu} "
     prj_src_dir = Path(env.subst("$PROJECT_SRC_DIR"))
-    system(f"nim c {nim_args} {prj_src_dir/'main'}")
+    system(f"nim cpp {nim_args} {prj_src_dir/'main'}")
 
 
 def _get_cpu() -> str:
