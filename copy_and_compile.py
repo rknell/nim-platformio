@@ -35,9 +35,10 @@ def compile():
     """
     libdeps = env.subst("$PROJECT_LIBDEPS_DIR/$PIOENV")
     cpu = _get_cpu()
-    nim_args = f"--path:{libdeps} --cpu:{cpu} "
     prj_src_dir = Path(env.subst("$PROJECT_SRC_DIR"))
-    system(f"nim cpp {nim_args} {prj_src_dir/'main'}")
+    nim_args = f"--path:{libdeps} --nimcache:{prj_src_dir}/nimcache --cpu:{cpu} "
+    command = f"nim cpp {nim_args} {prj_src_dir/'main'}"
+    system(command)
 
 
 def _get_cpu() -> str:
